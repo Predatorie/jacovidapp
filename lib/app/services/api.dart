@@ -13,7 +13,7 @@ class API {
   API({@required this.apiKey});
   final String apiKey;
 
-  factory API.sandbox() => API(apiKey: ApiKeys.sandboxKey);
+  factory API.sandbox() => API(apiKey: ApiKeys.productionKey);
 
   static final String host = 'ncov2019-admin.firebaseapp.com';
 

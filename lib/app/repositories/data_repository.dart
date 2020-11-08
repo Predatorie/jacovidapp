@@ -3,14 +3,16 @@ import 'package:http/http.dart';
 import 'package:jacovida/app/endpoints_model.dart';
 import 'package:jacovida/app/services/api.dart';
 import 'package:jacovida/app/services/api_service.dart';
+import 'package:jacovida/app/services/datacache_service.dart';
 import 'package:jacovida/app/services/end_pointdata.dart';
 
 class DataRepository {
   final APIService apiService;
+  final DataCacheService dataCacheService;
 
   String _token = '';
 
-  DataRepository({@required this.apiService});
+  DataRepository({@required this.apiService, @required this.dataCacheService});
 
   /// gets the int value by end point
   Future<EndPointData> getData(EndPoint endPoint) async =>
@@ -19,10 +21,16 @@ class DataRepository {
             apiService.getEndPointData(token: _token, endPoint: endPoint),
       );
 
-  Future<EndPointsData> getAllEndPointsData() async =>
-      await _getToken<EndPointsData>(
-        onGetData: _getAllEndPointsData,
-      );
+  EndPointsData getAllEndPointsCachedData() => dataCacheService.getData();
+
+  Future<EndPointsData> getAllEndPointsData() async {
+    var endPointsData = await _getToken<EndPointsData>(
+      onGetData: _getAllEndPointsData,
+    );
+
+    await dataCacheService.setData(endPointsData);
+    return endPointsData;
+  }
 
   Future<EndPointsData> _getAllEndPointsData() async {
     final values = await Future.wait([
