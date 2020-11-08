@@ -5,7 +5,9 @@ import 'package:jacovida/app/services/api_service.dart';
 import 'package:jacovida/ui/dashboard.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
+  //Intl.defaultLocale = 'en_GB';
+  //await initializeDateFormatting();
   runApp(MyApp());
 }
 

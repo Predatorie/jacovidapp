@@ -3,6 +3,7 @@ import 'package:jacovida/app/endpoints_model.dart';
 import 'package:jacovida/app/repositories/data_repository.dart';
 import 'package:jacovida/app/services/api.dart';
 import 'package:jacovida/ui/endpoint_card.dart';
+import 'package:jacovida/ui/timestamp.dart';
 import 'package:provider/provider.dart';
 
 class Dashboard extends StatefulWidget {
@@ -37,11 +38,16 @@ class _DashboardState extends State<Dashboard> {
         onRefresh: _updateData,
         child: ListView(
           children: [
+            LastUpdatedStatusString(
+              text: _endPointsData != null
+                  ? _endPointsData.values[EndPoint.cases].date ?? ''
+                  : '',
+            ),
             for (var endPoint in EndPoint.values)
               EndPointCard(
                 endPoint: endPoint,
                 value: _endPointsData != null
-                    ? _endPointsData.values[endPoint]
+                    ? _endPointsData.values[endPoint].value
                     : null,
               ),
           ],

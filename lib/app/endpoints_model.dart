@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:jacovida/app/services/api.dart';
+import 'package:jacovida/app/services/end_pointdata.dart';
 
 class EndPointsData {
-  final Map<EndPoint, int> values;
+  final Map<EndPoint, EndPointData> values;
 
   EndPointsData({@required this.values});
 
-  int get cases => values[EndPoint.cases];
-  int get casesConfirmed => values[EndPoint.casesConfirmed];
-  int get casesSuspected => values[EndPoint.casesSuspected];
-  int get deaths => values[EndPoint.deaths];
-  int get recovered => values[EndPoint.recovered];
+  EndPointData get cases => values[EndPoint.cases];
+  EndPointData get casesConfirmed => values[EndPoint.casesConfirmed];
+  EndPointData get casesSuspected => values[EndPoint.casesSuspected];
+  EndPointData get deaths => values[EndPoint.deaths];
+  EndPointData get recovered => values[EndPoint.recovered];
 
   @override
   String toString() =>

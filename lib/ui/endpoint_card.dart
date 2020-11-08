@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:jacovida/app/services/api.dart';
 
 class EndPointCardData {
@@ -30,6 +31,14 @@ class EndPointCard extends StatelessWidget {
     EndPoint.recovered:
         EndPointCardData('Recovered', 'assets/patient.png', Colors.green),
   };
+
+  String get formattedValue {
+    if (value == null) {
+      return '';
+    }
+
+    return NumberFormat('#,###,###,###').format(value);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +72,7 @@ class EndPointCard extends StatelessWidget {
                       color: cardData.color,
                     ),
                     Text(
-                      value?.toString() ?? '',
+                      formattedValue,
                       style: Theme.of(context).textTheme.headline5.copyWith(
                           color: cardData.color, fontWeight: FontWeight.bold),
                     ),

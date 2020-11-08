@@ -3,6 +3,7 @@ import 'package:http/http.dart';
 import 'package:jacovida/app/endpoints_model.dart';
 import 'package:jacovida/app/services/api.dart';
 import 'package:jacovida/app/services/api_service.dart';
+import 'package:jacovida/app/services/end_pointdata.dart';
 
 class DataRepository {
   final APIService apiService;
@@ -12,7 +13,8 @@ class DataRepository {
   DataRepository({@required this.apiService});
 
   /// gets the int value by end point
-  Future<int> getData(EndPoint endPoint) async => await _getToken<int>(
+  Future<EndPointData> getData(EndPoint endPoint) async =>
+      await _getToken<EndPointData>(
         onGetData: () =>
             apiService.getEndPointData(token: _token, endPoint: endPoint),
       );

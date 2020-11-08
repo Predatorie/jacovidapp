@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:jacovida/app/services/api.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:jacovida/app/services/end_pointdata.dart';
 
 class APIService {
   APIService(this.api);
@@ -27,7 +28,8 @@ class APIService {
     throw response;
   }
 
-  Future<int> getEndPointData({@required token, EndPoint endPoint}) async {
+  Future<EndPointData> getEndPointData(
+      {@required token, EndPoint endPoint}) async {
     final uri = api.endPointUri(endPoint);
     final response = await http.get(
       uri.toString(),
@@ -39,10 +41,12 @@ class APIService {
       if (data.isNotEmpty) {
         final Map<String, dynamic> endPointData = data[0];
         final String responseJsonKey = _responseJsonKeys[endPoint];
-        final int result = endPointData[responseJsonKey];
+        final int value = endPointData[responseJsonKey];
+        final String timeStamp = endPointData['date'];
+        final date = DateTime.tryParse(timeStamp);
 
-        if (result != null) {
-          return result;
+        if (value != null) {
+          return EndPointData(value: value, date: date);
         }
       }
     }
